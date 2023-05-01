@@ -1,25 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:tfg_flutter_app/models/exercise.dart';
 import 'package:tfg_flutter_app/theme/app_theme.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CardTable extends StatelessWidget {
-  const CardTable({super.key});
+  const CardTable({super.key, required this.exercises});
+
+  final List<Exercise> exercises;
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
+    if (exercises.isEmpty) {
+      return SizedBox(
+        width: double.infinity,
+        height: size.height * 0.5,
+        child: const Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
+
     return Table(
-      children: const [
-        TableRow(children: [
-          _SingleCard(
-              color: Colors.black,
-              icon: FontAwesomeIcons.addressBook,
-              text: "45° side bend"),
-          _SingleCard(
+      children: [
+        for (var i = 0; i < exercises.length; i += 2)
+          TableRow(children: [
+            _SingleCard(
               color: Colors.black,
               icon: Icons.fitness_center,
-              text: "all fours squad stretch"),
-        ]),
+              text: exercises[i].name,
+              img: exercises[i].gifUrl,
+            ),
+            if (i + 1 < exercises.length)
+              _SingleCard(
+                color: Colors.black,
+                icon: Icons.fitness_center,
+                text: exercises[i + 1].name,
+                img: exercises[i + 1].gifUrl,
+              ),
+          ])
       ],
     );
   }
@@ -31,11 +51,13 @@ class _SingleCard extends StatelessWidget {
     required this.color,
     required this.text,
     required this.icon,
+    required this.img,
   }) : super(key: key);
 
   final Color color;
   final String text;
   final IconData icon;
+  final String img;
 
   @override
   Widget build(BuildContext context) {
@@ -44,14 +66,12 @@ class _SingleCard extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         CircleAvatar(
-          backgroundColor: color,
-          radius: 30,
-          child: Icon(
-            icon,
-            size: 35,
-            color: Colors.white,
-          ),
-        ),
+            backgroundColor: color,
+            radius: 40,
+            child: ClipRRect(
+              child: Image(image: NetworkImage(img)),
+              borderRadius: BorderRadius.circular(15),
+            )),
         const SizedBox(
           height: 25,
         ),

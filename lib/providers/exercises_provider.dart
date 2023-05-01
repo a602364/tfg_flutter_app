@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:tfg_flutter_app/models/models.dart';
+import 'package:tfg_flutter_app/models/muscle.dart';
 import '../helper/debouncer.dart';
 
 class ExerciseProvider extends ChangeNotifier {
@@ -15,6 +16,8 @@ class ExerciseProvider extends ChangeNotifier {
   };
 
   List<Exercise> onDisplayExercises = [];
+  List<Exercise> onDisplayExercisesByMuscle = [];
+  List<Muscle> onDisplayMuscles = [];
 
   final debouncer = Debouncer(duration: const Duration(milliseconds: 350));
 
@@ -26,7 +29,31 @@ class ExerciseProvider extends ChangeNotifier {
   ExerciseProvider() {
     print("ExerciseProvider inicializado");
 
+    final List<String> muscleNames = [
+      "abductors",
+      "abs",
+      "adductors",
+      "biceps",
+      "calves",
+      "cardiovascular system",
+      "delts",
+      "forearms",
+      "glutes",
+      "hamstrings",
+      "lats",
+      "levator scapulae",
+      "pectorals",
+      "quads",
+      "serratus anterior",
+      "spine",
+      "traps",
+      "triceps",
+      "upper back"
+    ];
+
     getExercises();
+    getMuscles(muscleNames);
+    //getExercisesByMuscle();
   }
 
   Future<String> _getJsonData(
@@ -46,7 +73,41 @@ class ExerciseProvider extends ChangeNotifier {
       ),
     );
 
-    onDisplayExercises = exercises;
+    exercises.shuffle();
+    onDisplayExercises = exercises.take(16).toList();
     notifyListeners();
   }
+
+  getExercisesByMuscle(String target) async {
+    final jsonData =
+        await _getJsonData("exercises/target/$target", _requestHeaders);
+    final decodedData = jsonDecode(jsonData);
+    final exercisesByMuscle = List<Exercise>.from(
+      (decodedData as List<dynamic>).map(
+        (exerciseJson) => Exercise.fromMap(exerciseJson),
+      ),
+    );
+
+    onDisplayExercisesByMuscle = exercisesByMuscle;
+    notifyListeners();
+  }
+
+  getMuscles(List<String> muscleNames) async {
+    final muscles = muscleNames.map((name) => Muscle(name: name)).toList();
+    onDisplayMuscles = muscles;
+    notifyListeners();
+  }
+
+  // getExercises12() async {
+  //   final jsonData = await _getJsonData("exercises", _requestHeaders);
+  //   final decodedData = jsonDecode(jsonData);
+  //   final exercises = List<Exercise>.from(
+  //     (decodedData as List<dynamic>).map(
+  //       (exerciseJson) => Exercise.fromMap(exerciseJson),
+  //     ),
+  //   );
+
+  //   onDisplayExercises = exercises;
+  //   notifyListeners();
+  // }
 }

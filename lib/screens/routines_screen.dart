@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tfg_flutter_app/models/exercise.dart';
 import 'package:tfg_flutter_app/providers/exercises_provider.dart';
 import 'package:tfg_flutter_app/widgets/card_table.dart';
@@ -10,17 +11,22 @@ class RoutineScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final exercisesProvider = Provider.of<ExerciseProvider>(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
-          children: const [
-            // ContainerComponent(
-            //   texto: "Routines",
-            //   widget: RoutineSlider(),
-            // ),
+          children: [
+            ContainerComponent(
+              texto: "Muscle Groups",
+              widget: RoutineSlider(
+                muscles: exercisesProvider.onDisplayMuscles,
+                title: "Muscles",
+              ),
+            ),
             ContainerComponent(
               texto: "Exercises",
-              widget: CardTable(),
+              widget:
+                  CardTable(exercises: exercisesProvider.onDisplayExercises),
             )
           ],
         ),
