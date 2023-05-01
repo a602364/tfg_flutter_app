@@ -1,12 +1,13 @@
+import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
-  static const Color primary = Colors.indigo;
+  static const Color primary = Color.fromRGBO(44, 68, 160, 1);
+  static const Color secondary = Color.fromRGBO(217, 217, 217, 1);
 
-  static final ThemeData darkTheme = ThemeData.dark().copyWith(
+  static final ThemeData light = ThemeData.light().copyWith(
       //color primario
-      primaryColor: Colors.blueGrey,
-      //AppBarTheme
-      appBarTheme: const AppBarTheme(elevation: 0, color: Colors.blueGrey),
-      scaffoldBackgroundColor: Colors.black);
+      primaryColor: primary,
+      textTheme: GoogleFonts.openSansTextTheme());
 }

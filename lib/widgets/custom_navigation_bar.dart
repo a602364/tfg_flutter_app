@@ -13,6 +13,8 @@ class CustomNavigationBar extends StatelessWidget {
     final uiProvider = Provider.of<UiProvider>(context);
     final currentIndex = uiProvider.selectedMenuOpt;
 
+    var text = Text("data", style: TextStyle(fontSize: 20));
+
     return ConvexAppBar(
       style: TabStyle.react,
       height: 50,
