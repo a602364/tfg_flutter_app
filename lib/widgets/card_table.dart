@@ -3,6 +3,8 @@ import 'package:tfg_flutter_app/models/exercise.dart';
 import 'package:tfg_flutter_app/theme/app_theme.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'exercise_dialog.dart';
+
 class CardTable extends StatelessWidget {
   const CardTable({super.key, required this.exercises});
 
@@ -31,6 +33,7 @@ class CardTable extends StatelessWidget {
               icon: Icons.fitness_center,
               text: exercises[i].name,
               img: exercises[i].gifUrl,
+              exercise: exercises[i],
             ),
             if (i + 1 < exercises.length)
               _SingleCard(
@@ -38,6 +41,7 @@ class CardTable extends StatelessWidget {
                 icon: Icons.fitness_center,
                 text: exercises[i + 1].name,
                 img: exercises[i + 1].gifUrl,
+                exercise: exercises[i + 1],
               ),
           ])
       ],
@@ -52,44 +56,54 @@ class _SingleCard extends StatelessWidget {
     required this.text,
     required this.icon,
     required this.img,
+    required this.exercise,
   }) : super(key: key);
 
   final Color color;
   final String text;
   final IconData icon;
   final String img;
+  final Exercise exercise;
 
   @override
   Widget build(BuildContext context) {
     return _SingleCardBackground(
-        child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        CircleAvatar(
-            backgroundColor: color,
-            radius: 40,
-            child: ClipRRect(
-              child: Image(image: NetworkImage(img)),
-              borderRadius: BorderRadius.circular(15),
-            )),
-        const SizedBox(
-          height: 25,
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Text(
-            text.capitalize(),
-            textAlign: TextAlign.center,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: GoogleFonts.openSans(
-                textStyle: TextStyle(
-              color: color,
-              fontSize: 16,
-            )),
+        child: GestureDetector(
+      onTap: () {
+        //Navigator.pushNamed(context, "details", arguments: exercise);
+        showDialog(
+            context: context,
+            builder: (context) => ExerciseDialog(exercise: exercise));
+      },
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CircleAvatar(
+              backgroundColor: color,
+              radius: 40,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: Image(image: NetworkImage(img)),
+              )),
+          const SizedBox(
+            height: 25,
           ),
-        ),
-      ],
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Text(
+              text.capitalize(),
+              textAlign: TextAlign.center,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: GoogleFonts.openSans(
+                  textStyle: TextStyle(
+                color: color,
+                fontSize: 16,
+              )),
+            ),
+          ),
+        ],
+      ),
     ));
   }
 }
@@ -115,11 +129,5 @@ class _SingleCardBackground extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-extension StringExtension on String {
-  String capitalize() {
-    return "${this[0].toUpperCase()}${this.substring(1).toLowerCase()}";
   }
 }

@@ -46,7 +46,8 @@ class MyApp extends StatelessWidget {
         "routines": (_) => RoutineScreen(),
         "home": (_) => HomeScreen(),
         "settings": (_) => SettingsScreen(),
-        "chronometer": (_) => ChronometerScreen()
+        "chronometer": (_) => ChronometerScreen(),
+        "muscleList": (_) => MuscleListScreen()
       },
     );
   }

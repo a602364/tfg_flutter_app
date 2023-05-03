@@ -1,9 +1,11 @@
+import 'package:anim_search_bar/anim_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tfg_flutter_app/models/exercise.dart';
 import 'package:tfg_flutter_app/providers/exercises_provider.dart';
 import 'package:tfg_flutter_app/widgets/card_table.dart';
 
+import '../search/search_delegate.dart';
 import '../widgets/routine_slider.dart';
 
 class RoutineScreen extends StatelessWidget {
@@ -12,6 +14,8 @@ class RoutineScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final exercisesProvider = Provider.of<ExerciseProvider>(context);
+    TextEditingController textController = TextEditingController();
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(

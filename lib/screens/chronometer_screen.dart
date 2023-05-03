@@ -1,3 +1,4 @@
+import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 
 class ChronometerScreen extends StatelessWidget {
@@ -7,7 +8,13 @@ class ChronometerScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: Text('ChronometerScreen'),
+        child: CircularCountDownTimer(
+          duration: 60,
+          height: 200,
+          fillColor: Colors.red,
+          ringColor: Colors.orange,
+          width: 200,
+        ),
       ),
     );
   }

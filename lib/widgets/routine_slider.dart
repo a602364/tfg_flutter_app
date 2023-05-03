@@ -65,7 +65,7 @@ class _RoutineSliderState extends State<RoutineSlider> {
               scrollDirection: Axis.horizontal,
               itemBuilder: (_, int index) {
                 final muscle = widget.muscles[index];
-                return _MoviePoster(
+                return _MuscleImg(
                   muscle: muscle,
                 );
               },
@@ -76,22 +76,23 @@ class _RoutineSliderState extends State<RoutineSlider> {
   }
 }
 
-class _MoviePoster extends StatelessWidget {
-  const _MoviePoster({super.key, required this.muscle});
+class _MuscleImg extends StatelessWidget {
+  const _MuscleImg({super.key, required this.muscle});
   final Muscle muscle;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 130,
-      height: 190,
+      height: 160,
       margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           GestureDetector(
             //TODO Details
             onTap: () =>
-                Navigator.pushNamed(context, "details", arguments: muscle),
+                Navigator.pushNamed(context, "muscleList", arguments: muscle),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: Container(

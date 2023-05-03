@@ -17,6 +17,7 @@ class ExerciseProvider extends ChangeNotifier {
 
   List<Exercise> onDisplayExercises = [];
   List<Exercise> onDisplayExercisesByMuscle = [];
+  List<Exercise> onDisplayExercisesBySearch = [];
   List<Muscle> onDisplayMuscles = [];
 
   final debouncer = Debouncer(duration: const Duration(milliseconds: 350));
@@ -53,7 +54,6 @@ class ExerciseProvider extends ChangeNotifier {
 
     getExercises();
     getMuscles(muscleNames);
-    //getExercisesByMuscle();
   }
 
   Future<String> _getJsonData(
@@ -78,18 +78,18 @@ class ExerciseProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  getExercisesByMuscle(String target) async {
+  Future<List<Exercise>> getExercisesByMuscle(String target) async {
     final jsonData =
         await _getJsonData("exercises/target/$target", _requestHeaders);
     final decodedData = jsonDecode(jsonData);
-    final exercisesByMuscle = List<Exercise>.from(
+    final exercises = List<Exercise>.from(
       (decodedData as List<dynamic>).map(
         (exerciseJson) => Exercise.fromMap(exerciseJson),
       ),
     );
 
-    onDisplayExercisesByMuscle = exercisesByMuscle;
-    notifyListeners();
+    onDisplayExercisesByMuscle = exercises.toList();
+    return exercises.toList();
   }
 
   getMuscles(List<String> muscleNames) async {
@@ -98,16 +98,35 @@ class ExerciseProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // getExercises12() async {
-  //   final jsonData = await _getJsonData("exercises", _requestHeaders);
-  //   final decodedData = jsonDecode(jsonData);
-  //   final exercises = List<Exercise>.from(
-  //     (decodedData as List<dynamic>).map(
-  //       (exerciseJson) => Exercise.fromMap(exerciseJson),
-  //     ),
-  //   );
+  //TODO Search bar en ejercicios favoritos
+  void getSuggestionsByQuery(String searchTerm) {
+    debouncer.value = "";
+    debouncer.onValue = (value) async {
+      final results = await searchExercises(value);
+      _suggestionStreamController.add(results);
+    };
 
-  //   onDisplayExercises = exercises;
-  //   notifyListeners();
-  // }
+    final timer = Timer.periodic(const Duration(milliseconds: 300), (_) {
+      debouncer.value = searchTerm;
+    });
+
+    Future.delayed(const Duration(milliseconds: 301))
+        .then((_) => timer.cancel());
+  }
+
+  Future<List<Exercise>> searchExercises(String name) async {
+    final jsonData =
+        await _getJsonData("exercises/name/%7B$name%7D", _requestHeaders);
+    final decodedData = jsonDecode(jsonData);
+    final exercises = List<Exercise>.from(
+      (decodedData as List<dynamic>).map(
+        (exerciseJson) => Exercise.fromMap(exerciseJson),
+      ),
+    );
+
+    exercises.shuffle();
+    onDisplayExercisesBySearch = exercises.toList();
+    print(exercises.toString() + "hola");
+    return exercises.toList();
+  }
 }
