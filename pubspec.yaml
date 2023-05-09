@@ -31,7 +31,6 @@ environment:
 dependencies:
   anim_search_bar: ^2.0.3
   card_swiper: ^2.0.4
-  circular_countdown_timer: ^0.2.3
   convex_bottom_bar: ^3.2.0
   cupertino_icons: ^1.0.2
   flutter:
