@@ -113,8 +113,8 @@ class _MuscleImg extends StatelessWidget {
           ),
           Text(
             muscle.name.capitalize(),
-            maxLines: 2,
-            overflow: TextOverflow.clip,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
           )
         ],
