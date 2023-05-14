@@ -1,20 +1,43 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tfg_flutter_app/theme/app_theme.dart';
 
-class ChronometerScreen extends StatelessWidget {
+class ChronometerScreen extends StatefulWidget {
   const ChronometerScreen({Key? key}) : super(key: key);
 
   @override
+  _ChronometerScreenState createState() => _ChronometerScreenState();
+}
+
+class _ChronometerScreenState extends State<ChronometerScreen> {
+  late _ChronometerState _chronometerState;
+
+  @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: Chronometer());
+    return Scaffold(
+      body: Chronometer(
+        onChronometerStateChange: (state) {
+          _chronometerState = state;
+        },
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _chronometerState.stop();
+    _chronometerState.saveData();
+    super.dispose();
   }
 }
 
 class Chronometer extends StatefulWidget {
+  final Function(_ChronometerState) onChronometerStateChange;
+
   const Chronometer({
     Key? key,
+    required this.onChronometerStateChange,
   }) : super(key: key);
 
   @override
@@ -29,10 +52,51 @@ class _ChronometerState extends State<Chronometer> {
   List<String> laps = [];
   bool started = false;
 
+  late SharedPreferences _prefs;
+  final String _secondsKey = 'seconds';
+  final String _minutesKey = 'minutes';
+  final String _hoursKey = 'hours';
+  final String _lapsKey = 'laps';
+  final String _startedKey = 'started';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+    widget.onChronometerStateChange(this);
+  }
+
+  Future<void> _loadData() async {
+    _prefs = await SharedPreferences.getInstance();
+    setState(() {
+      seconds = _prefs.getInt(_secondsKey) ?? 0;
+      minutes = _prefs.getInt(_minutesKey) ?? 0;
+      hours = _prefs.getInt(_hoursKey) ?? 0;
+      laps = _prefs.getStringList(_lapsKey) ?? [];
+      started = _prefs.getBool(_startedKey) ?? false;
+    });
+  }
+
+  @override
+  void didUpdateWidget(covariant Chronometer oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    widget.onChronometerStateChange(this);
+  }
+
   @override
   void dispose() {
     timer?.cancel();
+    started = false;
+    saveData();
     super.dispose();
+  }
+
+  Future<void> saveData() async {
+    await _prefs.setInt(_secondsKey, seconds);
+    await _prefs.setInt(_minutesKey, minutes);
+    await _prefs.setInt(_hoursKey, hours);
+    await _prefs.setStringList(_lapsKey, laps);
+    await _prefs.setBool(_startedKey, started);
   }
 
   void start() {
@@ -92,10 +156,10 @@ class _ChronometerState extends State<Chronometer> {
     final digitHours = _formatTime(hours);
 
     return Center(
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
           Text(
             '$digitHours:$digitMinutes:$digitSeconds',
             style: const TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
@@ -183,7 +247,9 @@ class _ChronometerState extends State<Chronometer> {
               ],
             ),
           ),
-        ]));
+        ],
+      ),
+    );
   }
 }
 
