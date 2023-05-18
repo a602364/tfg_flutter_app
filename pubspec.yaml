@@ -31,15 +31,16 @@ environment:
 dependencies:
   anim_search_bar: ^2.0.3
   card_swiper: ^2.0.4
+  cloud_firestore: ^4.7.1
   convex_bottom_bar: ^3.2.0
   cupertino_icons: ^1.0.2
+  firebase_core: ^2.13.0
+  firebase_auth: ^4.6.1
   flutter:
     sdk: flutter
   flutter_advanced_networkimage_2: ^2.0.1
-  flutter_animated_splash: ^0.0.10
-  flutter_launcher_icons: ^0.13.1
-  flutter_native_splash: ^2.2.19
   google_fonts: ^4.0.4
+  google_sign_in: ^6.1.0
   http: ^0.13.5
   provider: ^6.0.5
   shared_preferences: ^2.1.1

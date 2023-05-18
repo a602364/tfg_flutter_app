@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "484586027986",
+    "project_id": "tfg-flutter-app",
+    "storage_bucket": "tfg-flutter-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:484586027986:android:1bec261d86685f2e7ce60b",
+        "android_client_info": {
+          "package_name": "com.example.tfg_flutter_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "484586027986-5bupfa87qoo867973pf84jouvp22ibl7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRiM39gcvi5v5oc8iW-AwmCd0ngfxclEQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "484586027986-5bupfa87qoo867973pf84jouvp22ibl7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "484586027986-def7a0tmfkbtsv8dg3oc9mqoh2q4qrct.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.tfgFlutterApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

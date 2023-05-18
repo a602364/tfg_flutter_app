@@ -3,10 +3,17 @@ import 'package:provider/provider.dart';
 import 'package:tfg_flutter_app/providers/exercises_provider.dart';
 import 'package:tfg_flutter_app/providers/ui_provider.dart';
 import 'package:flutter/services.dart';
+import 'package:tfg_flutter_app/screens/login_screen.dart';
 import 'package:tfg_flutter_app/screens/screens.dart';
 import 'package:tfg_flutter_app/theme/app_theme.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:tfg_flutter_app/widget_tree.dart';
 
-void main() => runApp(const AppState());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(const AppState());
+}
 
 class AppState extends StatelessWidget {
   const AppState({super.key});
@@ -40,14 +47,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Gym Reminder',
-      initialRoute: "home",
+      home: const WidgetTree(),
       theme: AppTheme.light,
       routes: {
-        "routines": (_) => RoutineScreen(),
-        "home": (_) => HomeScreen(),
-        "settings": (_) => SettingsScreen(),
-        "chronometer": (_) => ChronometerScreen(),
-        "muscleList": (_) => MuscleListScreen()
+        "routines": (_) => const RoutineScreen(),
+        "home": (_) => const HomeScreen(),
+        "settings": (_) => const SettingsScreen(),
+        "chronometer": (_) => const ChronometerScreen(),
+        "muscleList": (_) => const MuscleListScreen(),
+        "login": (_) => const LoginScreen(),
       },
     );
   }

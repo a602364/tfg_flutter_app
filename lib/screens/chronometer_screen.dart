@@ -119,10 +119,14 @@ class _ChronometerState extends State<Chronometer> {
   }
 
   void stop() {
-    timer!.cancel();
-    setState(() {
-      started = false;
-    });
+    if (timer != null && timer!.isActive) {
+      timer!.cancel();
+    }
+    if (mounted) {
+      setState(() {
+        started = false;
+      });
+    }
   }
 
   void reset() {
@@ -173,9 +177,9 @@ class _ChronometerState extends State<Chronometer> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(30),
-                  child: Expanded(
+                Expanded(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(30),
                     child: MaterialButton(
                       padding: const EdgeInsets.all(3),
                       animationDuration: const Duration(milliseconds: 100),
@@ -208,9 +212,9 @@ class _ChronometerState extends State<Chronometer> {
                 const SizedBox(
                   width: 15,
                 ),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(30),
-                  child: Expanded(
+                Expanded(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(30),
                     child: MaterialButton(
                       animationDuration: const Duration(milliseconds: 100),
                       padding: const EdgeInsets.all(3),

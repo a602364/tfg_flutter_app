@@ -1,13 +1,9 @@
-import 'package:anim_search_bar/anim_search_bar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tfg_flutter_app/providers/exercises_provider.dart';
-import 'package:tfg_flutter_app/search/search_delegate.dart';
 import 'package:tfg_flutter_app/theme/app_theme.dart';
 import 'package:tfg_flutter_app/widgets/exercise_dialog.dart';
 import '../models/models.dart';
-import 'package:flutter/material.dart';
 
 class MuscleListScreen extends StatelessWidget {
   const MuscleListScreen({Key? key}) : super(key: key);
@@ -24,7 +20,10 @@ class MuscleListScreen extends StatelessWidget {
             return Container(
               constraints: const BoxConstraints(maxWidth: 150),
               height: 180,
-              child: const CupertinoActivityIndicator(),
+              child: const Center(
+                  child: CircularProgressIndicator(
+                backgroundColor: Colors.white,
+              )),
             );
           }
 
