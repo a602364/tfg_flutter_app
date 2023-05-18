@@ -1,11 +1,11 @@
 import 'package:anim_search_bar/anim_search_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tfg_flutter_app/models/exercise.dart';
 import 'package:tfg_flutter_app/providers/exercises_provider.dart';
-import 'package:tfg_flutter_app/widgets/card_table.dart';
+import 'package:tfg_flutter_app/theme/app_theme.dart';
 
-import '../search/search_delegate.dart';
+import '../widgets/card_table.dart';
 import '../widgets/routine_slider.dart';
 
 class RoutineScreen extends StatelessWidget {
@@ -14,26 +14,69 @@ class RoutineScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final exercisesProvider = Provider.of<ExerciseProvider>(context);
+    final size = MediaQuery.of(context).size;
+    final user = FirebaseAuth.instance.currentUser;
+    final userName = user != null ? user.displayName ?? "Usuario" : "Usuario";
+
     TextEditingController textController = TextEditingController();
 
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            ContainerComponent(
-              texto: "Muscle Groups",
-              widget: RoutineSlider(
-                muscles: exercisesProvider.onDisplayMuscles,
-                title: "Muscles",
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(height: 40),
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Text(
+                    "Bienvenido $userName",
+                    textAlign: TextAlign.left,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                ContainerComponent(
+                  texto: "Muscle Groups",
+                  widget: RoutineSlider(
+                    muscles: exercisesProvider.onDisplayMuscles,
+                    title: "Muscles",
+                  ),
+                ),
+                ContainerComponent(
+                  texto: "Exercises",
+                  widget: CardTable(
+                      exercises: exercisesProvider.onDisplayExercises),
+                ),
+              ],
+            ),
+          ),
+          Positioned(
+            top: 0,
+            left: 0,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: AnimSearchBar(
+                onSubmitted: (_) {},
+                onSuffixTap: null,
+                textController: textController,
+                width: size.width - 20,
+                rtl: false,
+                autoFocus: true,
+                boxShadow: false,
+                closeSearchOnSuffixTap: true,
+                textFieldColor: AppTheme.secondary,
+                searchIconColor: AppTheme.primary,
+                textFieldIconColor: AppTheme.primary,
+                color: AppTheme.secondary,
               ),
             ),
-            ContainerComponent(
-              texto: "Exercises",
-              widget:
-                  CardTable(exercises: exercisesProvider.onDisplayExercises),
-            )
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -55,7 +98,10 @@ class ContainerComponent extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [TitleText(text: texto), widget],
+        children: [
+          TitleText(text: texto),
+          widget,
+        ],
       ),
     );
   }

@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:tfg_flutter_app/auth.dart';
 import 'package:tfg_flutter_app/theme/app_theme.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -7,7 +9,7 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Scaffold(
+    return const Scaffold(
       body: Center(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -22,53 +24,78 @@ class OptionsContainer extends StatelessWidget {
     super.key,
   });
 
+  Future<void> signOut() async {
+    await Auth().signOut();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Column(children: const [
-      SettingsCard(
+    return Column(children: [
+      const SettingsCard(
         text: "Account",
         iconData: Icons.account_circle_outlined,
       ),
-      Divider(
+      const Divider(
         thickness: 1,
         height: 1,
         indent: 30,
         endIndent: 30,
       ),
-      SettingsCard(
+      const SettingsCard(
         text: "Notifications",
         iconData: Icons.notifications_active_outlined,
       ),
-      Divider(
+      const Divider(
         thickness: 1,
         height: 1,
         indent: 30,
         endIndent: 30,
       ),
-      SettingsCard(
+      const SettingsCard(
         text: "Language",
         iconData: Icons.language_outlined,
       ),
-      Divider(
+      const Divider(
         thickness: 1,
         height: 1,
         indent: 30,
         endIndent: 30,
       ),
-      SettingsCard(
+      const SettingsCard(
         text: "Security",
         iconData: Icons.verified_user_outlined,
       ),
-      Divider(
+      const Divider(
         thickness: 1,
         height: 1,
         indent: 30,
         endIndent: 30,
       ),
-      SettingsCard(
+      const SettingsCard(
         text: "About",
         iconData: Icons.help_outline_outlined,
       ),
+      const Divider(
+        thickness: 0,
+        height: 1,
+        indent: 30,
+        endIndent: 30,
+      ),
+      GestureDetector(
+        onTap: () => signOut(),
+        child: Container(
+          height: 50,
+          width: double.infinity,
+          margin: const EdgeInsets.symmetric(horizontal: 20),
+          color: const Color.fromRGBO(190, 32, 42, 1),
+          child: const Center(
+            child: Text(
+              "Sign out",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+          ),
+        ),
+      )
     ]);
   }
 }
@@ -86,14 +113,14 @@ class SettingsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(20),
+      margin: const EdgeInsets.all(20),
       child: Column(
         children: [
           Row(
             children: [
               Icon(
                 iconData,
-                size: 40,
+                size: 35,
               ),
               const SizedBox(
                 width: 20,
@@ -101,7 +128,7 @@ class SettingsCard extends StatelessWidget {
               Text(
                 text,
                 style:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
               )
             ],
           )
@@ -118,8 +145,10 @@ class UserDataCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser;
+    final userName = user != null ? user.displayName ?? "Usuario" : "Usuario";
     return Container(
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20),
         child: Container(
@@ -130,8 +159,10 @@ class UserDataCard extends StatelessWidget {
             const SizedBox(
               width: 10,
             ),
-            const CircleAvatar(
+            CircleAvatar(
               radius: 50,
+              backgroundImage:
+                  user?.photoURL != null ? NetworkImage(user!.photoURL!) : null,
               backgroundColor: AppTheme.secondary,
             ),
             const SizedBox(
@@ -142,9 +173,9 @@ class UserDataCard extends StatelessWidget {
               margin: const EdgeInsetsDirectional.all(10),
               width: 150,
               height: double.maxFinite,
-              child: const Text(
-                "Israel Gómez Gámez",
-                style: TextStyle(
+              child: Text(
+                userName.toString(),
+                style: const TextStyle(
                     fontSize: 20,
                     color: AppTheme.secondary,
                     overflow: TextOverflow.ellipsis,
