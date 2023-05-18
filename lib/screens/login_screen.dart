@@ -146,7 +146,7 @@ class _LoginScreenState extends State<LoginScreen> {
               indent: 50,
               thickness: 2,
             )),
-            Text(isLogin ? 'Or register with' : 'Or sign in with'),
+            Text(isLogin ? 'Or sign in with' : 'Or register with'),
             const Expanded(
                 child: Divider(
               endIndent: 50,
@@ -161,7 +161,7 @@ class _LoginScreenState extends State<LoginScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 40),
             Buttons.Google,
             elevation: 0.5,
-            text: "Sign up with Google",
+            text: isLogin ? 'Sign up with Google' : 'Register with Google',
             onPressed: () => signInWithGoogle(),
           ),
         ]),

@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:tfg_flutter_app/models/muscle.dart';
 import 'package:tfg_flutter_app/theme/app_theme.dart';
@@ -77,7 +75,7 @@ class _RoutineSliderState extends State<RoutineSlider> {
 }
 
 class _MuscleImg extends StatelessWidget {
-  const _MuscleImg({super.key, required this.muscle});
+  const _MuscleImg({required this.muscle});
   final Muscle muscle;
 
   @override
@@ -98,7 +96,8 @@ class _MuscleImg extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                     border: Border.all(color: AppTheme.primary, width: 3),
-                    borderRadius: BorderRadius.circular(20)),
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.white),
                 child: FadeInImage(
                   placeholder: const AssetImage("assets/no-image.jpg"),
                   image: AssetImage("assets/img/${muscle.name}.jpg"),
@@ -125,6 +124,6 @@ class _MuscleImg extends StatelessWidget {
 
 extension StringExtension on String {
   String capitalize() {
-    return "${this[0].toUpperCase()}${this.substring(1).toLowerCase()}";
+    return "${this[0].toUpperCase()}${substring(1).toLowerCase()}";
   }
 }

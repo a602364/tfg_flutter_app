@@ -177,33 +177,31 @@ class _ChronometerState extends State<Chronometer> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Expanded(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(30),
-                    child: MaterialButton(
-                      padding: const EdgeInsets.all(3),
-                      animationDuration: const Duration(milliseconds: 100),
-                      onPressed: started ? setLap : reset,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 30, vertical: 5),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          border: Border.all(
-                            width: 3,
-                            color: Colors.transparent,
-                          ),
-                          color: AppTheme.secondary,
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(30),
+                  child: MaterialButton(
+                    padding: const EdgeInsets.all(3),
+                    animationDuration: const Duration(milliseconds: 100),
+                    onPressed: started ? setLap : reset,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 30, vertical: 5),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        border: Border.all(
+                          width: 3,
+                          color: Colors.transparent,
                         ),
-                        child: Container(
-                          alignment: Alignment.center,
-                          margin: const EdgeInsets.all(5),
-                          width: 50,
-                          height: 20,
-                          child: Text(
-                            started ? 'Lap' : 'Reset',
-                            style: const TextStyle(color: Colors.black),
-                          ),
+                        color: AppTheme.secondary,
+                      ),
+                      child: Container(
+                        alignment: Alignment.center,
+                        margin: const EdgeInsets.all(5),
+                        width: 50,
+                        height: 20,
+                        child: Text(
+                          started ? 'Lap' : 'Reset',
+                          style: const TextStyle(color: Colors.black),
                         ),
                       ),
                     ),
@@ -212,37 +210,35 @@ class _ChronometerState extends State<Chronometer> {
                 const SizedBox(
                   width: 15,
                 ),
-                Expanded(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(30),
-                    child: MaterialButton(
-                      animationDuration: const Duration(milliseconds: 100),
-                      padding: const EdgeInsets.all(3),
-                      onPressed: started ? stop : start,
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(30),
+                  child: MaterialButton(
+                    animationDuration: const Duration(milliseconds: 100),
+                    padding: const EdgeInsets.all(3),
+                    onPressed: started ? stop : start,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 30,
+                        vertical: 5,
+                      ),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          width: 3,
+                          color: Colors.transparent,
+                        ),
+                        borderRadius: BorderRadius.circular(30),
+                        color: started
+                            ? const Color.fromRGBO(190, 32, 42, 1)
+                            : AppTheme.primary,
+                      ),
                       child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 30,
-                          vertical: 5,
-                        ),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            width: 3,
-                            color: Colors.transparent,
-                          ),
-                          borderRadius: BorderRadius.circular(30),
-                          color: started
-                              ? const Color.fromRGBO(190, 32, 42, 1)
-                              : AppTheme.primary,
-                        ),
-                        child: Container(
-                          alignment: Alignment.center,
-                          margin: const EdgeInsets.all(5),
-                          width: 50,
-                          height: 20,
-                          child: Text(
-                            started ? 'Stop' : 'Start',
-                            style: const TextStyle(color: Colors.white),
-                          ),
+                        alignment: Alignment.center,
+                        margin: const EdgeInsets.all(5),
+                        width: 50,
+                        height: 20,
+                        child: Text(
+                          started ? 'Stop' : 'Start',
+                          style: const TextStyle(color: Colors.white),
                         ),
                       ),
                     ),
