@@ -28,14 +28,14 @@ class _HomePageBody extends StatelessWidget {
 
     switch (currentIndex) {
       case 0:
-        return RoutineScreen();
+        return const RoutineScreen();
       case 1:
-        return ChronometerScreen();
+        return const ChronometerScreen();
       case 2:
-        return SettingsScreen();
+        return const SettingsScreen();
       default:
         //!TODO Meter LoginScreen
-        return RoutineScreen();
+        return const RoutineScreen();
     }
   }
 }

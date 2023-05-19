@@ -31,4 +31,13 @@ class Exercise {
         name: json["name"],
         target: json["target"],
       );
+
+  Map<String, dynamic> toJson() => {
+        "bodyPart": bodyPart,
+        "equipment": equipment,
+        "gifUrl": gifUrl,
+        "id": id,
+        "name": name,
+        "target": target,
+      };
 }

@@ -91,7 +91,7 @@ class _SingleCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Text(
-              text.capitalize(),
+              text.capitalizeFirstLetter(),
               textAlign: TextAlign.center,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
@@ -109,7 +109,7 @@ class _SingleCard extends StatelessWidget {
 }
 
 class _SingleCardBackground extends StatelessWidget {
-  const _SingleCardBackground({super.key, required this.child});
+  const _SingleCardBackground({required this.child});
 
   final Widget child;
 

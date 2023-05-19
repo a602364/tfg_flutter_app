@@ -68,7 +68,7 @@ class _ExerciseItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-        title: Text(exercise.name.capitalize()),
+        title: Text(exercise.name.capitalizeFirstLetter()),
         onTap: (() {
           showDialog(
               context: context,
