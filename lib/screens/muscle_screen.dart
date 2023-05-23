@@ -42,7 +42,7 @@ class _MuscleListScreenState extends State<MuscleListScreen> {
           setState(() {});
         },
         child: FutureBuilder(
-          future: exerciseProvider.getExercisesByMuscle(muscle.name),
+          future: exerciseProvider.getExercisesByTargetMuscle(muscle.name),
           builder: (context, AsyncSnapshot<List<Exercise>> snapshot) {
             if (!snapshot.hasData) {
               return const Center(

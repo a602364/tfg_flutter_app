@@ -35,30 +35,31 @@ class ExerciseProvider extends ChangeNotifier {
     _loadApiKey();
     print("ExerciseProvider inicializado");
 
-    final List<String> muscleNames = [
-      "abductors",
-      "abs",
-      "adductors",
-      "biceps",
-      "calves",
-      "cardiovascular system",
-      "delts",
-      "forearms",
-      "glutes",
-      "hamstrings",
-      "lats",
-      "levator scapulae",
-      "pectorals",
-      "quads",
-      "serratus anterior",
-      "spine",
-      "traps",
-      "triceps",
-      "upper back"
-    ];
+    // final List<String> muscleNames = [
+    //   "abductors",
+    //   "abs",
+    //   "adductors",
+    //   "biceps",
+    //   "calves",
+    //   "cardiovascular system",
+    //   "delts",
+    //   "forearms",
+    //   "glutes",
+    //   "hamstrings",
+    //   "lats",
+    //   "levator scapulae",
+    //   "pectorals",
+    //   "quads",
+    //   "serratus anterior",
+    //   "spine",
+    //   "traps",
+    //   "triceps",
+    //   "upper back"
+    // ];
 
     getExercises();
-    getMuscles(muscleNames);
+    // getMuscles(muscleNames);
+    getMuscleTargetList();
   }
 
   Future<String> _getJsonData(
@@ -85,7 +86,19 @@ class ExerciseProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<List<Exercise>> getExercisesByMuscle(String target) async {
+  // Future<List<Exercise>> getExercisesByTargetMuscle(String target) async {
+  //   final jsonData =
+  //       await _getJsonData("exercises/target/$target", _requestHeaders);
+  //   final decodedData = jsonDecode(jsonData);
+  //   final exercises = decodedData.values
+  //       .map((exerciseJson) => Exercise.fromMap(exerciseJson))
+  //       .toList();
+
+  //   onDisplayExercisesByMuscle = exercises.toList();
+  //   return exercises.toList();
+  // }
+
+  Future<List<Exercise>> getExercisesByTargetMuscle(String target) async {
     final jsonData =
         await _getJsonData("exercises/target/$target", _requestHeaders);
     final decodedData = jsonDecode(jsonData);
@@ -99,8 +112,21 @@ class ExerciseProvider extends ChangeNotifier {
     return exercises.toList();
   }
 
-  getMuscles(List<String> muscleNames) async {
+  // getMuscles(List<String> muscleNames) async {
+  //   final muscles = muscleNames.map((name) => Muscle(name: name)).toList();
+  //   onDisplayMuscles = muscles;
+  //   notifyListeners();
+  // }
+
+  getMuscleTargetList() async {
+    await _loadApiKey();
+    final jsonData =
+        await _getJsonData("exercises/targetList", _requestHeaders);
+    final decodedData = jsonDecode(jsonData);
+    final muscleNames = List<String>.from(decodedData);
+
     final muscles = muscleNames.map((name) => Muscle(name: name)).toList();
+
     onDisplayMuscles = muscles;
     notifyListeners();
   }
