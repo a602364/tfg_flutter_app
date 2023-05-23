@@ -61,9 +61,12 @@ class _ExerciseDialogState extends State<ExerciseDialog> {
           ),
           const SizedBox(height: 15),
           FadeInImage(
-              placeholder: const AssetImage("assets/loading-spinner.gif"),
-              image: NetworkImage(widget.exercise.gifUrl)),
-          const SizedBox(height: 25),
+            placeholder: const AssetImage("assets/loading-spinner.gif"),
+            image: NetworkImage(widget.exercise.gifUrl),
+            fit: BoxFit.contain,
+            width: 360,
+            height: 360,
+          ),
           ListBody(children: [
             Text(
               "\u2022 Muscle Working on:\n${widget.exercise.target.capitalizeFirstLetter()}",

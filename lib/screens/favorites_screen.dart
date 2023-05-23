@@ -26,9 +26,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
 
     scrollController.addListener(() {
       if ((scrollController.position.pixels + 500) >=
-          scrollController.position.maxScrollExtent) {
-        // fetch more data if needed
-      }
+          scrollController.position.maxScrollExtent) {}
     });
 
     loadFavoriteExercises();
@@ -61,9 +59,32 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
         color: AppTheme.primary,
         onRefresh: onRefresh,
         child: ListView(
+          physics: const AlwaysScrollableScrollPhysics(),
           controller: scrollController,
           children: [
-            CardTable(exercises: favoriteExercises),
+            favoriteExercises.isEmpty
+                ? Container(
+                    alignment: Alignment.bottomCenter,
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      children: [
+                        Text(
+                          "There is not favorite exercises",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 30,
+                              color: Colors.grey[350],
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Icon(
+                          Icons.star,
+                          size: 50,
+                          color: Colors.grey[350],
+                        )
+                      ],
+                    ),
+                  )
+                : CardTable(exercises: favoriteExercises),
           ],
         ),
       ),
