@@ -1,9 +1,7 @@
-import 'package:anim_search_bar/anim_search_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tfg_flutter_app/providers/exercises_provider.dart';
-import 'package:tfg_flutter_app/theme/app_theme.dart';
 
 import '../widgets/card_table.dart';
 import '../widgets/routine_slider.dart';
@@ -21,62 +19,37 @@ class RoutineScreen extends StatelessWidget {
     TextEditingController textController = TextEditingController();
 
     return Scaffold(
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox(height: 40),
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Text(
-                    "Bienvenido $userName",
-                    textAlign: TextAlign.left,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SizedBox(height: 40),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              child: Text(
+                "Welcome $userName!",
+                textAlign: TextAlign.left,
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
-                const SizedBox(height: 10),
-                ContainerComponent(
-                  texto: "Muscle Groups",
-                  widget: RoutineSlider(
-                    muscles: exercisesProvider.onDisplayMuscles,
-                    title: "Muscles",
-                  ),
-                ),
-                ContainerComponent(
-                  texto: "Exercises",
-                  widget: CardTable(
-                      exercises: exercisesProvider.onDisplayExercises),
-                ),
-              ],
-            ),
-          ),
-          Positioned(
-            top: 0,
-            left: 0,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: AnimSearchBar(
-                onSubmitted: (_) {},
-                onSuffixTap: null,
-                textController: textController,
-                width: size.width - 20,
-                rtl: false,
-                autoFocus: true,
-                boxShadow: false,
-                closeSearchOnSuffixTap: true,
-                textFieldColor: AppTheme.secondary,
-                searchIconColor: AppTheme.primary,
-                textFieldIconColor: AppTheme.primary,
-                color: AppTheme.secondary,
               ),
             ),
-          ),
-        ],
+            const SizedBox(height: 10),
+            ContainerComponent(
+              texto: "Muscle Groups",
+              widget: RoutineSlider(
+                muscles: exercisesProvider.onDisplayMuscles,
+                title: "Muscles",
+              ),
+            ),
+            ContainerComponent(
+              texto: "Exercises",
+              widget:
+                  CardTable(exercises: exercisesProvider.onDisplayExercises),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -41,9 +41,12 @@ class OptionsContainer extends StatelessWidget {
         indent: 30,
         endIndent: 30,
       ),
-      const SettingsCard(
-        text: "Notifications",
-        iconData: Icons.notifications_active_outlined,
+      GestureDetector(
+        onTap: () => Navigator.pushNamed(context, "favorites"),
+        child: const SettingsCard(
+          text: "Favorite exercises",
+          iconData: Icons.star_outline,
+        ),
       ),
       const Divider(
         thickness: 1,
@@ -113,7 +116,9 @@ class SettingsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(20),
+      color: Colors.transparent,
+      padding: const EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
       child: Column(
         children: [
           Row(

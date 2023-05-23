@@ -99,7 +99,7 @@ class _MuscleImg extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                     color: Colors.white),
                 child: FadeInImage(
-                  placeholder: const AssetImage("assets/no-image.jpg"),
+                  placeholder: const AssetImage("assets/loading-spinner.gif"),
                   image: AssetImage("assets/img/${muscle.name}.jpg"),
                   height: 180,
                   fit: BoxFit.contain,

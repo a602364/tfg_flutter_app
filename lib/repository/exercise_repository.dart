@@ -37,4 +37,15 @@ class ExerciseRepository extends GetxController {
       await favoritosRef.doc(exercise.id).delete();
     }
   }
+
+  Future<List<Exercise>> getFavExercises(UserModel user) async {
+    final userRef = _db.collection('users').doc(user.id);
+    final favoritosRef = userRef.collection('favExercises');
+
+    final querySnapshot = await favoritosRef.get();
+    final exerciseList =
+        querySnapshot.docs.map((doc) => Exercise.fromMap(doc.data())).toList();
+
+    return exerciseList;
+  }
 }

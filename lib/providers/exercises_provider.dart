@@ -3,17 +3,23 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:tfg_flutter_app/models/models.dart';
-import 'package:tfg_flutter_app/models/muscle.dart';
 import '../helper/debouncer.dart';
+import '../secrets/secret_loader.dart';
 
 class ExerciseProvider extends ChangeNotifier {
   final String _baseUrl = "exercisedb.p.rapidapi.com";
-  final String _apiKey = "16b2c8d491mshff2c83a52a1a374p1b43edjsnadb37cd5a71e";
-
   final Map<String, String> _requestHeaders = {
-    'X-RapidAPI-Key': '16b2c8d491mshff2c83a52a1a374p1b43edjsnadb37cd5a71e',
+    'X-RapidAPI-Key': "",
+    //1a Key: 16b2c8d491mshff2c83a52a1a374p1b43edjsnadb37cd5a71e
+    //2a Key: 6e2280ff23msh8b639ab7a51842bp1d7c61jsnbbf1b5aeb37b
     'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
   };
+
+  _loadApiKey() async {
+    final secret =
+        await SecretLoader(secretPath: "lib/secrets/secrets.json").load();
+    _requestHeaders['X-RapidAPI-Key'] = secret.apiKey;
+  }
 
   List<Exercise> onDisplayExercises = [];
   List<Exercise> onDisplayExercisesByMuscle = [];
@@ -28,6 +34,7 @@ class ExerciseProvider extends ChangeNotifier {
       _suggestionStreamController.stream;
 
   ExerciseProvider() {
+    _loadApiKey();
     print("ExerciseProvider inicializado");
 
     final List<String> muscleNames = [
@@ -58,13 +65,15 @@ class ExerciseProvider extends ChangeNotifier {
 
   Future<String> _getJsonData(
       String endpoint, Map<String, String> headers) async {
-    final url = Uri.https(_baseUrl, endpoint, {"api_key": _apiKey});
+    final url = Uri.https(
+        _baseUrl, endpoint, {"api_key": _requestHeaders['X-RapidAPI-Key']});
 
     final response = await http.get(url, headers: headers);
     return response.body;
   }
 
   getExercises() async {
+    await _loadApiKey();
     final jsonData = await _getJsonData("exercises", _requestHeaders);
     final decodedData = jsonDecode(jsonData);
     final exercises = List<Exercise>.from(
@@ -126,7 +135,7 @@ class ExerciseProvider extends ChangeNotifier {
 
     exercises.shuffle();
     onDisplayExercisesBySearch = exercises.toList();
-    print(exercises.toString() + "hola");
+    print("${exercises}hola");
     return exercises.toList();
   }
 }

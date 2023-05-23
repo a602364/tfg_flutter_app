@@ -42,3 +42,7 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+lib/providers/exercises_provider.dart
+lib/secrets/secret_loader.dart
+lib/secrets/secret_class.dart
+lib/secrets/secrets.json

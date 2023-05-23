@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:tfg_flutter_app/providers/exercises_provider.dart';
 import 'package:tfg_flutter_app/providers/ui_provider.dart';
 import 'package:flutter/services.dart';
+import 'package:tfg_flutter_app/screens/favorites_screen.dart';
 import 'package:tfg_flutter_app/screens/login_screen.dart';
 import 'package:tfg_flutter_app/screens/screens.dart';
 import 'package:tfg_flutter_app/theme/app_theme.dart';
@@ -56,6 +57,7 @@ class MyApp extends StatelessWidget {
         "chronometer": (_) => const ChronometerScreen(),
         "muscleList": (_) => const MuscleListScreen(),
         "login": (_) => const LoginScreen(),
+        "favorites": (_) => const FavoritesScreen(),
       },
     );
   }
