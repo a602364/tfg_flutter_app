@@ -10,8 +10,6 @@ class ExerciseProvider extends ChangeNotifier {
   final String _baseUrl = "exercisedb.p.rapidapi.com";
   final Map<String, String> _requestHeaders = {
     'X-RapidAPI-Key': "",
-    //1a Key: 16b2c8d491mshff2c83a52a1a374p1b43edjsnadb37cd5a71e
-    //2a Key: 6e2280ff23msh8b639ab7a51842bp1d7c61jsnbbf1b5aeb37b
     'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
   };
 
