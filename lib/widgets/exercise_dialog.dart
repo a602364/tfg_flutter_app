@@ -64,8 +64,8 @@ class _ExerciseDialogState extends State<ExerciseDialog> {
             placeholder: const AssetImage("assets/loading-spinner.gif"),
             image: NetworkImage(widget.exercise.gifUrl),
             fit: BoxFit.contain,
-            width: 360,
-            height: 360,
+            width: 250,
+            height: 250,
           ),
           ListBody(children: [
             Text(

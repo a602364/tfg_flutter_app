@@ -50,7 +50,7 @@ class _MuscleListScreenState extends State<MuscleListScreen> {
                   height: 180,
                   child: Center(
                     child: CircularProgressIndicator(
-                      backgroundColor: Colors.white,
+                      backgroundColor: Colors.transparent,
                     ),
                   ),
                 ),

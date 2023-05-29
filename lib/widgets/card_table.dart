@@ -28,12 +28,29 @@ class CardTable extends StatelessWidget {
       children: [
         for (var i = 0; i < exercises.length; i += 2)
           TableRow(children: [
-            _SingleCard(
-              exercise: exercises[i],
+            GestureDetector(
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => ExerciseDialog(exercise: exercises[i]),
+                );
+              },
+              child: _SingleCard(
+                exercise: exercises[i],
+              ),
             ),
             if (i + 1 < exercises.length)
-              _SingleCard(
-                exercise: exercises[i + 1],
+              GestureDetector(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) =>
+                        ExerciseDialog(exercise: exercises[i + 1]),
+                  );
+                },
+                child: _SingleCard(
+                  exercise: exercises[i + 1],
+                ),
               ),
             if (i + 1 >= exercises.length) const _EmptyCard(),
           ])
@@ -85,40 +102,32 @@ class _SingleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _SingleCardBackground(
-      child: GestureDetector(
-        onTap: () {
-          showDialog(
-            context: context,
-            builder: (context) => ExerciseDialog(exercise: exercise),
-          );
-        },
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CircleAvatar(
-              backgroundColor: Colors.transparent,
-              radius: 40,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: FadeInImage(
-                  image: NetworkImage(exercise.gifUrl),
-                  placeholder: const AssetImage("assets/loading-spinner.gif"),
-                ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CircleAvatar(
+            backgroundColor: Colors.transparent,
+            radius: 40,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(15),
+              child: FadeInImage(
+                image: NetworkImage(exercise.gifUrl),
+                placeholder: const AssetImage("assets/loading-spinner.gif"),
               ),
             ),
-            const SizedBox(height: 25),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Text(
-                exercise.name.capitalizeFirstLetter(),
-                textAlign: TextAlign.center,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: GoogleFonts.openSans(fontSize: 16),
-              ),
+          ),
+          const SizedBox(height: 25),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Text(
+              exercise.name.capitalizeFirstLetter(),
+              textAlign: TextAlign.center,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: GoogleFonts.openSans(fontSize: 16),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

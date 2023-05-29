@@ -20,6 +20,8 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
 
   final exerciseRepository = Get.put(ExerciseRepository());
 
+  bool isLoading = true;
+
   @override
   void initState() {
     super.initState();
@@ -45,11 +47,14 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     final exercises = await exerciseRepository.getFavExercises(userModel);
     setState(() {
       favoriteExercises = exercises;
+      isLoading = false;
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppTheme.primary,
@@ -62,29 +67,53 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
           physics: const AlwaysScrollableScrollPhysics(),
           controller: scrollController,
           children: [
-            favoriteExercises.isEmpty
-                ? Container(
-                    alignment: Alignment.bottomCenter,
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      children: [
-                        Text(
-                          "There is not favorite exercises",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: 30,
-                              color: Colors.grey[350],
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Icon(
-                          Icons.star,
-                          size: 50,
-                          color: Colors.grey[350],
-                        )
-                      ],
+            Stack(
+              children: [
+                Visibility(
+                  visible: isLoading,
+                  child: Center(
+                    child: Container(
+                      height: size.height * 0.8,
+                      alignment: Alignment.center,
+                      child: const CircularProgressIndicator(),
                     ),
-                  )
-                : CardTable(exercises: favoriteExercises),
+                  ),
+                ),
+                Visibility(
+                  visible: !isLoading && favoriteExercises.isEmpty,
+                  child: Container(
+                    height: size.height * 0.8,
+                    margin: const EdgeInsets.all(20),
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.all(16),
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "There is not favorite exercises",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 30,
+                                color: Colors.grey[350],
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Icon(
+                            Icons.star,
+                            size: 50,
+                            color: Colors.grey[350],
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Visibility(
+                  visible: !isLoading && favoriteExercises.isNotEmpty,
+                  child: CardTable(exercises: favoriteExercises),
+                ),
+              ],
+            ),
           ],
         ),
       ),
