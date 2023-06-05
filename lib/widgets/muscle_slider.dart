@@ -3,16 +3,16 @@ import 'package:tfg_flutter_app/models/muscle.dart';
 import 'package:tfg_flutter_app/theme/app_theme.dart';
 import '../models/models.dart';
 
-class RoutineSlider extends StatefulWidget {
-  const RoutineSlider({super.key, this.title, required this.muscles});
+class MuscleSlider extends StatefulWidget {
+  const MuscleSlider({super.key, this.title, required this.muscles});
   final String? title;
   final List<Muscle> muscles;
 
   @override
-  State<RoutineSlider> createState() => _RoutineSliderState();
+  State<MuscleSlider> createState() => _MuscleSliderState();
 }
 
-class _RoutineSliderState extends State<RoutineSlider> {
+class _MuscleSliderState extends State<MuscleSlider> {
   final ScrollController scrollController = ScrollController();
   @override
   void initState() {

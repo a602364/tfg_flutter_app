@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:tfg_flutter_app/providers/exercises_provider.dart';
 
 import '../widgets/card_table.dart';
-import '../widgets/routine_slider.dart';
+import '../widgets/muscle_slider.dart';
 
 class RoutineScreen extends StatelessWidget {
   const RoutineScreen({Key? key}) : super(key: key);
@@ -38,7 +38,7 @@ class RoutineScreen extends StatelessWidget {
             const SizedBox(height: 10),
             ContainerComponent(
               texto: "Muscle Groups",
-              widget: RoutineSlider(
+              widget: MuscleSlider(
                 muscles: exercisesProvider.onDisplayMuscles,
                 title: "Muscles",
               ),
